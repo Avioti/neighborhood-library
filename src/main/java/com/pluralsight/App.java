@@ -140,6 +140,9 @@ public class App {
         for (Book book : inventory) {
             if (book.isCheckedOut()) {
                 System.out.println(book.getId() + " | " + book.getIsbn() + " | " + book.getTitle() +" | " + book.getCheckedOutTo());
+            } else {
+                System.out.println("No books checked out at this time Thank you");
+                break;
             }
         }
     }
