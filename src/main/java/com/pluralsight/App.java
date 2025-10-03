@@ -141,7 +141,7 @@ public class App {
             if (book.isCheckedOut()) {
                 System.out.println(book.getId() + " | " + book.getIsbn() + " | " + book.getTitle() +" | " + book.getCheckedOutTo());
             } else {
-                System.out.println("No books checked out at this time Thank you");
+                System.out.println("All books currently in Stock. Thank you for your interest!");
                 break;
             }
         }
