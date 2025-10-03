@@ -5,6 +5,9 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+
+
         Book[] bookInventory= {
                 new Book(1, "978-0134685991", "Effective Java", "", false),
                 new Book(2, "978-0596009205", "Head First Java", "", false),
@@ -28,13 +31,18 @@ public class App {
                 new Book(20, "978-0879694357", "Evolution (Douglas Futuyma)", "", false)
         };
 
+
+
         while(true){
+
             displayHomeScreen();
 
             int command = scanner.nextInt();
             scanner.nextLine();
 
             switch(command){
+
+
                 case 1:
                     listAllBooks(bookInventory);
                     System.out.println("Select an option:");
@@ -52,30 +60,22 @@ public class App {
 
                     }
                     break;
+
+
                 case 2:
                     listCheckedOutBooks(bookInventory);
-                    System.out.println("C to check in a book");
-                    System.out.println("X - to go back to home screen");
+                    System.out.println("C - to Check In a book");
+                    System.out.println("X - to go back to the home screen");
                     String choice = scanner.nextLine();
-                    if(choice.equalsIgnoreCase("C")){
-                        System.out.println("Enter book ID to check in");
-                        int bookId = scanner.nextInt();
-                        for (Book book : bookInventory) {
-                            if(book.getId() == bookId){
-                                if(book.isCheckedOut()){
-                                    book.checkIn();
-                                } else {
-                                    System.out.println("That book is not checked out.");
-                                }
-                                break;
+                    checkInBook(bookInventory,choice);
 
-                            }
-                        }
-                    }
                     break;
+
+
                 case 3:
                     bookInventory = donateBook(scanner, bookInventory);
                     break;
+
 
                 default:
                     System.out.println("Exiting application. Goodbye!");
@@ -88,14 +88,19 @@ public class App {
 
 
 
-
         }
-
 
 
     }
 
+    public static void displayHomeScreen(){
+        System.out.println("1 - Show Available Books");
+        System.out.println("2 - Show Checked Out Books");
+        System.out.println("3 - Donate a Book of your choice");
+        System.out.println("4 - Exit - Close out the Application");
 
+        System.out.printf("%nSelect an option: ");
+    }
 
     public static void checkOutBook(Book[] inventory, int bookId, String name){
         for (Book book : inventory) {
@@ -110,25 +115,46 @@ public class App {
     }
 
 
+    public static void checkInBook(Book[] inventory,String choice){
+        Scanner scanner = new Scanner(System.in);
+        if(choice.equalsIgnoreCase("C")){
+            System.out.println("Enter book ID to check in");
+            int bookId = scanner.nextInt();
+            for (Book book : inventory) {
+                if(book.getId() == bookId){
+                    if(book.isCheckedOut()){
+                        book.checkIn();
+                    } else {
+                        System.out.println("That book is not checked out.");
+                    }
+                    break;
+
+                }
+            }
+        }
+    }
+
 
 
     public static void listCheckedOutBooks(Book[] inventory) {
         for (Book book : inventory) {
-            // Only show books that are NOT checked out
             if (book.isCheckedOut()) {
                 System.out.println(book.getId() + " | " + book.getIsbn() + " | " + book.getTitle() +" | " + book.getCheckedOutTo());
             }
         }
     }
 
+
+
     public static void listAllBooks(Book[] inventory) {
         for (Book book : inventory) {
-            // Only show books that are NOT checked out
             if (!book.isCheckedOut()) {
                 System.out.println(book.getId() + " | " + book.getIsbn() + " | " + book.getTitle());
             }
         }
     }
+
+
     public static Book[] donateBook(Scanner input, Book[] inventory){
         System.out.println("Enter the ISBN of the book you want to donate: ");
         String isbn = input.nextLine();
@@ -152,12 +178,6 @@ public class App {
         return newInventory;
     }
 
-    public static void displayHomeScreen(){
-        System.out.println("1 - Show Available Books");
-        System.out.println("2 - Show Checked Out Books");
-        System.out.println("3 - Donate a Book of your choice");
-        System.out.println("4 - Exit - Close out the Application");
 
-        System.out.printf("%nEnter Option: ");
-    }
+
 }
